@@ -49,7 +49,7 @@ test('decide sends rendered state + questions and returns a well-formed axis vec
   const d = createJevDecider({ client });
   assert.equal(d.name, 'jev');
   assert.equal(d.p99Ms, 300);
-  const axes = await d.decide(http(503), { describe: 'GET /inventory', dependency: 'inv' }, { attempts: [] });
+  const axes = await d.decide(http(503), { description: 'GET /inventory', dependency: 'inv' }, { attempts: [] });
   const { state } = client.calls[0];
   assert.match(state, /HTTP 503/);
   assert.match(state, /http status: 503/);
@@ -123,7 +123,7 @@ test('a malformed response falls closed to the site default through rekurs', asy
 test('site-declared nouls are asked and returned under axes.nouls', async () => {
   const client = stubClient((qs) => ({ ...good, 'noul:errorPayload': { p: 0.9 }, 'noul:auth': 0.1 }));
   const d = createJevDecider({ client });
-  const site = { describe: 'x', nouls: { errorPayload: 'the response body is an error payload', auth: 'this is an authentication failure', missing: 'never answered' } };
+  const site = { description: 'x', nouls: { errorPayload: 'the response body is an error payload', auth: 'this is an authentication failure', missing: 'never answered' } };
   const axes = await d.decide(new Error('boom'), site, {});
   const { questions } = client.calls[0];
   assert.deepEqual(questions['noul:errorPayload'], { type: 'noul', statement: 'the response body is an error payload' });
@@ -135,13 +135,13 @@ test('injected render is used; a failing or empty render falls back', async () =
   const client = stubClient(good);
   const seen = [];
   const d = createJevDecider({ client, render: (context, site, ctx, opts) => { seen.push({ context, opts }); return `RENDERED ${context.eventId}`; } });
-  await d.decide(http(500), { describe: 'op' }, { context: { eventId: 'e1' }, attempts: [] });
+  await d.decide(http(500), { description: 'op' }, { context: { eventId: 'e1' }, attempts: [] });
   assert.equal(client.calls[0].state, 'RENDERED e1');
   assert.equal(seen[0].opts.budgetBytes, 2048);
   assert.equal(seen[0].opts.error.status, 500);
 
   const d2 = createJevDecider({ client, render: () => { throw new Error('render broke'); } });
-  await d2.decide(http(500), { describe: 'op' }, {});
+  await d2.decide(http(500), { description: 'op' }, {});
   assert.match(client.calls[1].state, /^exception: Error: HTTP 500/);
   const d3 = createJevDecider({ client, render: () => '' });
   await d3.decide(http(500), {}, {});
@@ -172,7 +172,7 @@ test('e2e: timeout on a side-effecting site → reconcile', async () => {
   const r = jevRekurs();
   let calls = 0;
   const out = await r(async () => { calls++; throw new TimeoutError(5000); },
-    { describe: 'POST /charge', dependency: 'pay', actions: { retry: retry({ sleep: noSleep }), reconcile: () => 'looked-up' } });
+    { description: 'POST /charge', dependency: 'pay', actions: { retry: retry({ sleep: noSleep }), reconcile: () => 'looked-up' } });
   assert.equal(calls, 1);
   assert.equal(out.action, 'reconcile');
   assert.equal(out.attempts[0].rule, 'side-effects-unknown-outcome');

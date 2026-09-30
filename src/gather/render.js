@@ -105,7 +105,7 @@ function attemptLines(context, ctx) {
 function operationLines(site) {
   if (!site) return [];
   const out = [];
-  if (site.describe) out.push(oneLine(`describe: ${site.describe}`));
+  if (site.description) out.push(oneLine(`description: ${site.description}`));
   const flags = [
     `dependency=${site.dependency ?? 'default'}`,
     `idempotent=${!!site.idempotent}`,

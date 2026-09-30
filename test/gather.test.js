@@ -61,7 +61,7 @@ test('one event per failing invocation; later attempts become breadcrumbs', { sk
     n += 1;
     if (n <= 3) throw Object.assign(new Error(`upstream down #${n}`), { code: 'ECONNRESET' });
     return 'ok';
-  }, { idempotent: true, dependency: 'svc', describe: 'GET /things', actions: { retry: retry({ sleep: noSleep, max: 5 }) } });
+  }, { idempotent: true, dependency: 'svc', description: 'GET /things', actions: { retry: retry({ sleep: noSleep, max: 5 }) } });
 
   assert.equal(out.value, 'ok');
   assert.equal(out.attempts.length, 3);
@@ -79,7 +79,7 @@ test('one event per failing invocation; later attempts become breadcrumbs', { sk
   assert.deepEqual(contexts[2].attempts.map((a) => a.action), ['retry', 'retry', null]);
 
   // The context is a plain object a renderer can use without the SDK.
-  const text = renderState(contexts[2], { describe: 'GET /things', dependency: 'svc', idempotent: true, sideEffects: false }, { attempts: out.attempts });
+  const text = renderState(contexts[2], { description: 'GET /things', dependency: 'svc', idempotent: true, sideEffects: false }, { attempts: out.attempts });
   assert.match(text, /^## exception\nError: upstream down #1/);
   assert.match(text, /rekurs\.attempt/);
 });

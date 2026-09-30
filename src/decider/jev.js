@@ -197,7 +197,7 @@ export function fallbackRender(err, site = {}, ctx = {}, { budgetBytes = 2048 } 
   if (err?.code) lines.push(`code: ${err.code}`);
   const status = statusOf(err);
   if (status !== null && status !== undefined) lines.push(`http status: ${status}`);
-  if (site?.describe) lines.push(`operation: ${site.describe}`);
+  if (site?.description) lines.push(`operation: ${site.description}`);
   if (site?.dependency) lines.push(`dependency: ${site.dependency}`);
   const n = ctx?.attempts?.length ?? 0;
   lines.push(`attempt: ${n + 1} (${n} prior failure${n === 1 ? '' : 's'})`);

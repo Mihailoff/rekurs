@@ -22,7 +22,7 @@ export const DEPENDENCY = 'fault-server';
 
 export const SITES = {
   getWork: {
-    describe: 'GET /work: read the work queue',
+    description: 'GET /work: read the work queue',
     dependency: DEPENDENCY,
     idempotent: true,
     sideEffects: false,
@@ -31,7 +31,7 @@ export const SITES = {
     actions: ['retry', 'degrade', 'abort'],
   },
   charge: {
-    describe: 'POST /charge: charge the customer card',
+    description: 'POST /charge: charge the customer card',
     dependency: DEPENDENCY,
     idempotent: false,
     sideEffects: true,

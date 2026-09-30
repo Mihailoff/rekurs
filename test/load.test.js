@@ -43,7 +43,7 @@ test('20k failing invocations across 50 dependencies with a stalled decider', as
   });
 
   const sites = Array.from({ length: DEPS }, (_, i) => ({
-    describe: `call dep${i}`,
+    description: `call dep${i}`,
     dependency: `dep${i}`,
     default: 'degrade',
     actions: { degrade: () => 'fallback' },

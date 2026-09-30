@@ -38,7 +38,7 @@ export function createRecordingDecider(inner, { path, now = () => new Date().toI
       const record = {
         fingerprint: fingerprint(err, site),
         error: { name: err?.name, message: err?.message, code: err?.code ?? null, status: statusOf(err) },
-        site: { describe: site?.describe, dependency: site?.dependency, idempotent: site?.idempotent, sideEffects: site?.sideEffects },
+        site: { description: site?.description, dependency: site?.dependency, idempotent: site?.idempotent, sideEffects: site?.sideEffects },
         axes,
         decider: inner.name,
         at: now(),

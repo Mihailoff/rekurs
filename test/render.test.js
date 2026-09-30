@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { renderState } from '../src/gather/render.js';
 
-const site = { describe: 'charge card via PSP', dependency: 'psp', idempotent: false, sideEffects: true, deadlineMs: 800 };
+const site = { description: 'charge card via PSP', dependency: 'psp', idempotent: false, sideEffects: true, deadlineMs: 800 };
 
 const event = {
   event_id: 'abc',

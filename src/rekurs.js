@@ -62,7 +62,7 @@ export function normalizeSite(site) {
   const actions = { ...builtinActions, ...(site.actions ?? {}) };
   const idempotent = site.idempotent === true;
   const out = {
-    describe: site.describe ?? '',
+    description: site.description ?? '',
     dependency: site.dependency ?? 'default',
     idempotent,
     sideEffects: site.sideEffects ?? !idempotent,
@@ -133,7 +133,7 @@ export function createRekurs({
 
         const attempt = { at: now(), error: err, action, rule, axes };
         ctx.attempts.push(attempt);
-        onDecision?.({ site: site.describe, dependency: site.dependency, action, rule, axes: axes && flattenAxes(axes), error: describeError(err) }, ctx);
+        onDecision?.({ site: site.description, dependency: site.dependency, action, rule, axes: axes && flattenAxes(axes), error: describeError(err) }, ctx);
 
         let out;
         try { out = await site.actions[action](err, ctx); }

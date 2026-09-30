@@ -20,9 +20,9 @@ function throwElsewhere(status) { throw Object.assign(new Error(`HTTP ${status}`
 
 const tmp = () => mkdtempSync(join(tmpdir(), 'rekurs-fixture-'));
 const sites = {
-  inv: { describe: 'GET /inventory', idempotent: true, dependency: 'inv', actions: { retry: async () => 'retried', degrade: () => 'stale' } },
-  api: { describe: 'GET /me', idempotent: true, dependency: 'api', actions: { degrade: () => 'x' } },
-  search: { describe: 'GET /search', idempotent: true, dependency: 'search', actions: { retry: retry({ sleep: noSleep }), degrade: () => 'cached' } },
+  inv: { description: 'GET /inventory', idempotent: true, dependency: 'inv', actions: { retry: async () => 'retried', degrade: () => 'stale' } },
+  api: { description: 'GET /me', idempotent: true, dependency: 'api', actions: { degrade: () => 'x' } },
+  search: { description: 'GET /search', idempotent: true, dependency: 'search', actions: { retry: retry({ sleep: noSleep }), degrade: () => 'cached' } },
 };
 
 async function outcome(r, status, site, thrower = throwHere) {
@@ -38,7 +38,7 @@ test('recording writes one JSONL line per decision and returns axes unchanged', 
     const rec = createRecordingDecider(createFixedDecider(axes, { name: 'fixed', p99Ms: 7 }), { path, now: () => 'T0' });
     assert.equal(rec.p99Ms, 7);
     const err = Object.assign(new Error('nope'), { code: 'EX', status: 418 });
-    const site = { describe: 'op', dependency: 'd', idempotent: false, sideEffects: true };
+    const site = { description: 'op', dependency: 'd', idempotent: false, sideEffects: true };
     const out = await rec.decide(err, site, {});
     assert.equal(out, axes);
     await rec.decide(err, site, {});
@@ -47,7 +47,7 @@ test('recording writes one JSONL line per decision and returns axes unchanged', 
     assert.deepEqual(lines[0], {
       fingerprint: fingerprint(err, site),
       error: { name: 'Error', message: 'nope', code: 'EX', status: 418 },
-      site: { describe: 'op', dependency: 'd', idempotent: false, sideEffects: true },
+      site: { description: 'op', dependency: 'd', idempotent: false, sideEffects: true },
       axes,
       decider: 'fixed',
       at: 'T0',

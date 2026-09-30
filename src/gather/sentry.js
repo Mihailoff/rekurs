@@ -150,7 +150,7 @@ export async function createSentryGather(options = {}) {
     scope.setTag('rekurs.side_effects', String(!!site?.sideEffects));
     scope.setTag('rekurs.fingerprint', fingerprint(err, site));
     scope.setContext('rekurs', {
-      describe: site?.describe ?? '',
+      description: site?.description ?? '',
       dependency: site?.dependency ?? 'default',
       idempotent: !!site?.idempotent,
       sideEffects: !!site?.sideEffects,

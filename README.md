@@ -74,7 +74,7 @@ const rekurs = sentry.wrap(createRekurs({ gather: sentry.gather, onDecision: sen
 const { value } = await rekurs(
   (signal) => fetch('https://api.example.com/things', { signal }).then((r) => r.json()),
   {
-    describe: 'list things',
+    description: 'list things',
     dependency: 'example-api',
     idempotent: true,
     deadlineMs: 2_000,
