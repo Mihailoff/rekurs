@@ -7,3 +7,6 @@ export * from './axes.js';
 export { fingerprint, topFrame } from './fingerprint.js';
 export { createGuardedDecider, DeciderGuardError } from './decider/guarded.js';
 export { createBoundedSink, createDecisionStats } from './audit/sink.js';
+export { createJevDecider, JevResponseError } from './decider/jev.js';
+export { createRecordingDecider, createFixtureDecider, FixtureMissError } from './decider/fixture.js';
+export { createMockJevClient } from './decider/mock-jev-client.js';

@@ -68,6 +68,7 @@ export function normalizeSite(site) {
     sideEffects: site.sideEffects ?? !idempotent,
     deadlineMs: site.deadlineMs ?? Infinity,
     criticality: site.criticality ?? 'normal',
+    nouls: site.nouls ?? {},
     default: site.default ?? 'abort',
     actions,
     maxAttempts: site.maxAttempts ?? 10,
