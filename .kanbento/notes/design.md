@@ -5,8 +5,10 @@ revised: 2026-09-30
 ---
 # rekurs — design
 
-Status: brainstorm consolidated 2026-09-29/30, nothing implemented yet. Named rekurs on
-2026-09-30 (was Exceptionist); see "Naming" below.
+Status: prototype built 2026-09-30 — phases 1–5 of §13 are on main (116 tests, demo green:
+`npm test`, `node demo/index.js`). Open: live Toxiproxy run, Jev calibration (needs API access),
+residual measurement (needs real traffic), control plane, feedback loop, chaos selection.
+Named rekurs on 2026-09-30 (was Exceptionist); see "Naming" below.
 
 ## 1. Thesis
 
