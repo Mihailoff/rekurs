@@ -54,6 +54,9 @@ export async function createSentryGather(options = {}) {
     mode = 'auto', // 'auto' | 'init' | 'isolated'
     environment,
     release,
+    // Breadcrumbs the resilience layer itself produces (e.g. the decider's own HTTP calls) must
+    // never feed back into perception. Default: drop anything to the Jev API host.
+    ignoreBreadcrumbs = (b) => /api\.typesafe\.ai/.test(b?.data?.url ?? ''),
   } = options;
 
   const Sentry = options.sentry ?? await loadSentry();
@@ -136,6 +139,7 @@ export async function createSentryGather(options = {}) {
     const known = new Set(state.breadcrumbs.map(crumbKey));
     for (const b of scopeBreadcrumbs()) {
       if ((b.timestamp ?? 0) < state.since) continue;
+      if (ignoreBreadcrumbs?.(b)) continue;
       const k = crumbKey(b);
       if (!known.has(k)) { known.add(k); state.breadcrumbs.push(b); }
     }
@@ -166,7 +170,7 @@ export async function createSentryGather(options = {}) {
     return {
       eventId,
       event,
-      breadcrumbs: [...(event?.breadcrumbs ?? [])],
+      breadcrumbs: (event?.breadcrumbs ?? []).filter((b) => !ignoreBreadcrumbs?.(b)),
       since: nowSeconds(),
       decisions: [],
       tags: {},

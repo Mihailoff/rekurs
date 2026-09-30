@@ -164,3 +164,15 @@ test('gather never throws into the recovery path', { skip }, async () => {
   const weird = await sentry.gather(Object.create(null), null, { attempts: null });
   assert.ok(weird === null || typeof weird === 'object');
 });
+
+test('the default ignoreBreadcrumbs filter drops the decider\'s own API calls', { skip }, async () => {
+  contexts.length = 0;
+  await run(async () => {
+    Sentry.addBreadcrumb({ category: 'http', data: { url: 'https://api.typesafe.ai/v1/systemone', method: 'POST' } });
+    Sentry.addBreadcrumb({ category: 'http', data: { url: 'http://svc.local/things', method: 'GET' } });
+    throw Object.assign(new Error('boom'), { status: 503 });
+  }, { idempotent: true, dependency: 'svc', description: 'GET /things', default: 'degrade', actions: { degrade: () => 'x' } });
+  const urls = contexts[0].breadcrumbs.map((b) => b?.data?.url).filter(Boolean);
+  assert.ok(urls.includes('http://svc.local/things'));
+  assert.ok(!urls.some((u) => u.includes('api.typesafe.ai')));
+});
