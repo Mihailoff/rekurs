@@ -22,6 +22,8 @@ A bare pool — no commitment point yet; captured work waits as Options.
 
 Types — record (knowledge layer, flow:false, via `note --type`): `procedure` (file). An embodied type (file/folder) materializes its artifact.
 
+Vendored docs live under `.kanbento/vendor/<host>/`.
+
 - `○ pool` · options
 - `▶ in_progress` · active
 - `✓ done` · done

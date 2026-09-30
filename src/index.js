@@ -12,3 +12,4 @@ export { createRecordingDecider, createFixtureDecider, FixtureMissError } from '
 export { createMockJevClient } from './decider/mock-jev-client.js';
 export { createSentryGather } from './gather/sentry.js';
 export { renderState } from './gather/render.js';
+export { createJevHttpClient, JevHttpError } from './decider/jev-http-client.js';

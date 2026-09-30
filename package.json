@@ -17,7 +17,8 @@
     "test": "node --test",
     "demo": "node demo/index.js",
     "demo:record": "node demo/record.js",
-    "demo:toxiproxy": "node demo/toxiproxy.js"
+    "demo:toxiproxy": "node demo/toxiproxy.js",
+    "eval:jev": "node scripts/jev-eval.js"
   },
   "license": "MIT",
   "repository": "github:Mihailoff/rekurs",
