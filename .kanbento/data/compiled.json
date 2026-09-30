@@ -1,0 +1,36 @@
+{
+  "boardId": "exceptionist",
+  "revision": 0,
+  "wipEnforcement": "advisory",
+  "stages": [
+    {
+      "id": "pool",
+      "role": "options",
+      "order": 0,
+      "wip": null,
+      "gate": null
+    },
+    {
+      "id": "in_progress",
+      "role": "active",
+      "order": 1,
+      "wip": null,
+      "gate": null
+    },
+    {
+      "id": "done",
+      "role": "done",
+      "order": 2,
+      "wip": null,
+      "gate": null
+    }
+  ],
+  "flows": [],
+  "types": [
+    "procedure"
+  ],
+  "lanes": [],
+  "classes": [],
+  "relations": [],
+  "toolVersion": "0.3.0"
+}

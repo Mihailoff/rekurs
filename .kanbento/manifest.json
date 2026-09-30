@@ -1,0 +1,54 @@
+{
+  "manifestVersion": "1.0",
+  "board": {
+    "id": "exceptionist",
+    "name": "rekurs",
+    "revision": 0,
+    "maturity": "standard"
+  },
+  "inbox": {
+    "sources": [
+      "human",
+      "agent",
+      "request",
+      "feedback"
+    ],
+    "landing": "pool"
+  },
+  "stages": [
+    {
+      "id": "pool",
+      "role": "options"
+    },
+    {
+      "id": "in_progress",
+      "role": "active"
+    },
+    {
+      "id": "done",
+      "role": "done"
+    }
+  ],
+  "types": [
+    {
+      "id": "procedure",
+      "embodiment": "file",
+      "path": ".kanbento/procedures/{slug}.md",
+      "flow": false,
+      "runnable": true
+    }
+  ],
+  "policies": {
+    "joining": "A worker announces its capability profile on arrival."
+  },
+  "cardSchema": {
+    "core": [
+      "id",
+      "title",
+      "state",
+      "createdAt",
+      "updatedAt"
+    ],
+    "types": "open"
+  }
+}
