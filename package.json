@@ -1,0 +1,17 @@
+{
+  "name": "rekurs",
+  "version": "0.0.1",
+  "description": "Failure as a decision point: perceive the fault, let policy pick the recourse.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": ["src"],
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT",
+  "repository": "github:Mihailoff/rekurs"
+}
