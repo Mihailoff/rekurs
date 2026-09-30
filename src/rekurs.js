@@ -93,7 +93,7 @@ export function createRekurs({
     if (decider.p99Ms > 0 && remaining < decider.p99Ms * 2) reason = 'deadline';
     else {
       try { axes = await decider.decide(err, site, ctx); }
-      catch (e) { reason = 'decider-unavailable'; ctx.deciderError = e; }
+      catch (e) { reason = typeof e?.code === 'string' ? `decider-unavailable:${e.code}` : 'decider-unavailable'; ctx.deciderError = e; }
     }
 
     let action;
