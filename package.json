@@ -7,11 +7,18 @@
   "exports": {
     ".": "./src/index.js"
   },
-  "files": ["src"],
-  "engines": { "node": ">=20" },
+  "files": [
+    "src"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "test": "node --test"
   },
   "license": "MIT",
-  "repository": "github:Mihailoff/rekurs"
+  "repository": "github:Mihailoff/rekurs",
+  "optionalDependencies": {
+    "@sentry/node": "^11.1.0"
+  }
 }

@@ -10,3 +10,5 @@ export { createBoundedSink, createDecisionStats } from './audit/sink.js';
 export { createJevDecider, JevResponseError } from './decider/jev.js';
 export { createRecordingDecider, createFixtureDecider, FixtureMissError } from './decider/fixture.js';
 export { createMockJevClient } from './decider/mock-jev-client.js';
+export { createSentryGather } from './gather/sentry.js';
+export { renderState } from './gather/render.js';

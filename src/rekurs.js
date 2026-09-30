@@ -82,7 +82,7 @@ export function createRekurs({
   policy = defaultPolicy,
   registry = defaultRegistry,
   gather = null,          // async (err, site, ctx) → context object (phase 2: Sentry)
-  onDecision = null,      // (record) → void — audit hook
+  onDecision = null,      // (record, ctx) → void — audit hook
   now = Date.now,
 } = {}) {
   async function decide(err, site, ctx, dep) {
@@ -133,7 +133,7 @@ export function createRekurs({
 
         const attempt = { at: now(), error: err, action, rule, axes };
         ctx.attempts.push(attempt);
-        onDecision?.({ site: site.describe, dependency: site.dependency, action, rule, axes: axes && flattenAxes(axes), error: describeError(err) });
+        onDecision?.({ site: site.describe, dependency: site.dependency, action, rule, axes: axes && flattenAxes(axes), error: describeError(err) }, ctx);
 
         let out;
         try { out = await site.actions[action](err, ctx); }
