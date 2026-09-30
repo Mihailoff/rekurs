@@ -5,3 +5,6 @@ export { createFixedDecider } from './decider/fixed.js';
 export { createDependencyRegistry, createBreaker, createRetryBudget } from './state/dependency.js';
 export * from './axes.js';
 export { fingerprint, topFrame } from './fingerprint.js';
+export { createJevDecider, JevResponseError } from './decider/jev.js';
+export { createRecordingDecider, createFixtureDecider, FixtureMissError } from './decider/fixture.js';
+export { createMockJevClient } from './decider/mock-jev-client.js';
