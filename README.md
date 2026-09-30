@@ -3,6 +3,45 @@
 Failure as a decision point: perceive the fault, let policy pick the recourse.
 rekurs does not recurse — every retry charges a deadline and a per-dependency budget.
 
+## Perception vs policy
+
+A decider only perceives: it places the failure on five fault axes and never sees the action
+menu. A deterministic policy turns those axes, the call site's static declarations and shared
+dependency state into one action, and names the rule that matched. Hard gates (breaker,
+retry budget, side effects with an unknown outcome) never depend on a probability.
+
+## Quickstart: the demo
+
+```sh
+npm install
+npm run demo                       # node demo/index.js
+```
+
+The demo starts an in-process fault server (`demo/fault-server.js`), wraps two call sites
+(`GET /work`, idempotent; `POST /charge`, side-effecting) with no per-error code, and injects
+one fault per scenario: timeout, 503, 429, 401, a malformed 200, a reset socket, a flapping
+upstream, and a 500-call storm against a stalled decider. It prints one row per scenario
+(action, matched rule, attempts, decider, degraded) and exits 1 if any row deviates from the
+expectations in `demo/scenarios.js`. Sentry events go to `.rekurs/demo.jsonl`.
+
+Switch the perception provider with `--decider=mock-jev` (default: the Jev decider with a
+keyword-based mock client), `--decider=rules` (the lookup table) or `--decider=fixture`
+(replay recorded decisions). `--no-sentry` skips context gathering.
+`npm run demo:toxiproxy` runs the same call sites through real network faults (latency,
+blackhole, reset_peer, slicer, limit_data) if a Toxiproxy server is reachable at
+`TOXIPROXY_URL` (default `http://localhost:8474`); otherwise it prints install hints.
+
+## Fixtures and the CI eval
+
+`test/eval.test.js` replays `test/fixtures/decisions.jsonl` through the default policy and
+asserts each scenario's first decision (`expected: { action, rule }` in `demo/scenarios.js`).
+A change to labels, thresholds or preference tables that flips a decision fails CI.
+After an intentional change, regenerate the fixtures and review the diff:
+
+```sh
+npm run demo:record                # rewrites test/fixtures/decisions.jsonl deterministically
+```
+
 ## The wrapper
 
 `rekurs(fn, declarations)` runs `fn`. On failure it gathers context, asks a decider to

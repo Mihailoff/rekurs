@@ -14,7 +14,10 @@
     "node": ">=20"
   },
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "demo": "node demo/index.js",
+    "demo:record": "node demo/record.js",
+    "demo:toxiproxy": "node demo/toxiproxy.js"
   },
   "license": "MIT",
   "repository": "github:Mihailoff/rekurs",
