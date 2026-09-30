@@ -4,3 +4,4 @@ export { createRulesDecider, classify } from './decider/rules.js';
 export { createFixedDecider } from './decider/fixed.js';
 export { createDependencyRegistry, createBreaker, createRetryBudget } from './state/dependency.js';
 export * from './axes.js';
+export { fingerprint, topFrame } from './fingerprint.js';
